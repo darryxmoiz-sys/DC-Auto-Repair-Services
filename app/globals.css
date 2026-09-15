@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-oswald), "Arial Narrow", sans-serif;
+  --font-body: var(--font-worksans), system-ui, sans-serif;
+
+  /* Base surfaces */
+  --color-surface: oklch(0.14 0.014 240);
+  --color-surface-raised: oklch(0.185 0.016 238);
+  --color-surface-line: oklch(0.29 0.02 235);
+
+  /* Cyan ramp — brand primary, from logo neon outline */
+  --color-cyan-100: oklch(0.93 0.05 210);
+  --color-cyan-300: oklch(0.82 0.1 212);
+  --color-cyan-500: oklch(0.72 0.14 215);
+  --color-cyan-600: oklch(0.62 0.13 217);
+  --color-cyan-800: oklch(0.38 0.08 220);
+
+  /* Gold — logo bolt/flag, CTA only */
+  --color-gold-400: oklch(0.86 0.15 92);
+  --color-gold-500: oklch(0.78 0.16 88);
+  --color-gold-700: oklch(0.5 0.12 85);
+
+  /* Text */
+  --color-ink: oklch(0.965 0.004 240);
+  --color-ink-muted: oklch(0.71 0.018 235);
+  --color-ink-faint: oklch(0.5 0.015 235);
+
+  /* Semantic tokens */
+  --color-bg: var(--color-surface);
+  --color-panel: var(--color-surface-raised);
+  --color-border: var(--color-surface-line);
+  --color-accent: var(--color-cyan-500);
+  --color-accent-strong: var(--color-cyan-300);
+  --color-accent-dim: var(--color-cyan-800);
+  --color-cta: var(--color-gold-500);
+  --color-cta-strong: var(--color-gold-400);
+  --color-cta-ink: oklch(0.16 0.02 90);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-ink-muted);
+  --color-text-faint: var(--color-ink-faint);
+
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background: var(--color-bg);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-strong);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-cyan-800);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .grain-panel {
+    background-image:
+      linear-gradient(var(--color-panel), var(--color-panel)),
+      repeating-linear-gradient(
+        115deg,
+        oklch(0.72 0.14 215 / 0.05) 0px,
+        oklch(0.72 0.14 215 / 0.05) 1px,
+        transparent 1px,
+        transparent 14px
+      );
+    background-blend-mode: normal;
+  }
+
+  .diag-fill {
+    background-image: repeating-linear-gradient(
+      45deg,
+      oklch(0.72 0.14 215 / 0.14) 0px,
+      oklch(0.72 0.14 215 / 0.14) 2px,
+      transparent 2px,
+      transparent 12px
+    );
+  }
+
+  .dot-fill {
+    background-image: radial-gradient(
+      oklch(0.72 0.14 215 / 0.35) 1.4px,
+      transparent 1.4px
+    );
+    background-size: 14px 14px;
+  }
+
+  .grid-fill {
+    background-image:
+      linear-gradient(oklch(0.72 0.14 215 / 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.72 0.14 215 / 0.16) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s var(--ease-spring) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      animation: none;
+    }
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-panel) 0%,
+    oklch(0.24 0.018 235) 50%,
+    var(--color-panel) 100%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s linear infinite;
+}
